@@ -22,6 +22,7 @@ jobs:
 
           TEMP=$(echo $WEATHER_DATA | jq '.main.temp')
           WEATHER_DESC=$(echo $WEATHER_DATA | grep -o '"description":"[^"]*' | sed 's/"description":"//')
+          echo "DESC: $WEATHER_DESC"
 
           if [[ "$WEATHER_DESC" == *"晴"* ]]; then
             WEATHER_EMOJI="☀️"
@@ -32,7 +33,7 @@ jobs:
           elif [[ "$WEATHER_DESC" == *"雪"* ]]; then
             WEATHER_EMOJI="❄️"
           else
-            WEATHER_EMOJI="🌈"  # その他の天気
+            WEATHER_EMOJI="🌈"
           fi
 
           # README.mdの「Hi there 👋」セクションの絵文字を天気に置き換え
@@ -42,6 +43,10 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "Update weather information in README.md"
-          git push
+          if [ -n "$(git status --porcelain)" ]; then
+            git add README.md
+            git commit -m "Update weather information in README.md"
+            git push
+          else
+            echo "No changes to commit"
+          fi
