@@ -22,18 +22,17 @@ jobs:
 
           TEMP=$(echo $WEATHER_DATA | jq '.main.temp')
           WEATHER_DESC=$(echo $WEATHER_DATA | grep -o '"description":"[^"]*' | sed 's/"description":"//')
-          echo "DESC: $WEATHER_DESC"
 
           if [[ "$WEATHER_DESC" == *"晴"* ]]; then
             WEATHER_EMOJI="☀️"
-          elif [[ "$WEATHER_DESC" == *"曇"* ]]; then
-            WEATHER_EMOJI="☁️"
           elif [[ "$WEATHER_DESC" == *"雨"* ]]; then
             WEATHER_EMOJI="🌧️"
           elif [[ "$WEATHER_DESC" == *"雪"* ]]; then
             WEATHER_EMOJI="❄️"
+          elif [[ "$WEATHER_DESC" == *"曇"* || "$WEATHER_DESC" == *"雲"*  ]]; then
+            WEATHER_EMOJI="☁️"
           else
-            WEATHER_EMOJI="🌈"
+            WEATHER_EMOJI="👋"
           fi
 
           # README.mdの「Hi there 👋」セクションの絵文字を天気に置き換え
