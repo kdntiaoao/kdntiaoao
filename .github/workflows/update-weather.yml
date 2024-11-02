@@ -21,8 +21,7 @@ jobs:
           WEATHER_DATA=$(curl -s $URL)
 
           TEMP=$(echo $WEATHER_DATA | jq '.main.temp')
-          WEATHER_DESC=$(echo $WEATHER_DATA | jq -r '.weather[0].description')
-          echo ${{ WEATHER_DESC }}
+          WEATHER_DESC=$(echo $WEATHER_DATA | grep -o '"description":"[^"]*' | sed 's/"description":"//')
 
           if [[ "$WEATHER_DESC" == *"晴"* ]]; then
             WEATHER_EMOJI="☀️"
