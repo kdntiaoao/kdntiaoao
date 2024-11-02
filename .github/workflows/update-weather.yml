@@ -35,8 +35,7 @@ jobs:
             WEATHER_EMOJI="👋"
           fi
 
-          # README.mdの「Hi there 👋」セクションの絵文字を天気に置き換え
-          sed -i "s/## Hi there 👋/## Hi there ${WEATHER_EMOJI}/" README.md
+          sed -i "1s/.*/## Hi there ${WEATHER_EMOJI}/" README.md
 
       - name: Commit changes
         run: |
