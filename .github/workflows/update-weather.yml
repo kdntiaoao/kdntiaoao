@@ -22,8 +22,8 @@ jobs:
 
           TEMP=$(echo $WEATHER_DATA | jq '.main.temp')
           WEATHER_DESC=$(echo $WEATHER_DATA | jq -r '.weather[0].description')
+          echo ${{ WEATHER_DESC }}
 
-          # 天気に応じた絵文字を設定
           if [[ "$WEATHER_DESC" == *"晴"* ]]; then
             WEATHER_EMOJI="☀️"
           elif [[ "$WEATHER_DESC" == *"曇"* ]]; then
